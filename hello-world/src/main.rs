@@ -42,13 +42,30 @@ async fn index(data: web::Data<AppStateWithCounter>) -> String {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .service(
+                web::scope("/")
+                    .guard(guard::Header("Host", "www.rust-lang.org"))
+                    .route("", web::to(|| HttpResponse::Ok().body("www"))),
+            )
+            .service(
+                web::scope("/")
+                .guard(guard::Header("Host", "users.rust-lang.org"))
+                .route("", web::to(|| HttpResponse::Ok().body("user"))),
+            )
+            .route("/", web::to(|| HttpServer::Ok()))
+    })
+    .bind("127.0.0.1:8080")?
+    .run()
+    .await
     //let counter = web::Data::new(AppStateWithCounter {
     //    counter: Mutex::new(0),
     //});
-    let scope = web::scope("/users").service(show_users);
-    App::new().service(scope);
-    HttpServer::new(move || {
-        App::new()
+    // let scope = web::scope("/users").service(show_users);
+    // App::new().service(scope);
+    // HttpServer::new(move || {
+        // App::new()
             // .service(hello)
             // .service(echo)
             // .route("/hey", web::get().to(manual_hello))
@@ -56,11 +73,11 @@ async fn main() -> std::io::Result<()> {
             // .data(AppState {
             //     app_name: String::from("Actix-web"),
             // })
-            .app_data(counter.clone())
-            .route("/", web::get().to(index))
+            // .app_data(counter.clone())
+            // .route("/", web::get().to(index))
             // .service(index)
-    })
-    .bind("127.0.0.1:8080")?
-    .run()
-    .await
+    // })
+    // .bind("127.0.0.1:8080")?
+    // .run()
+    // .await
 }
