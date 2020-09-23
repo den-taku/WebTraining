@@ -42,9 +42,11 @@ async fn index(data: web::Data<AppStateWithCounter>) -> String {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let counter = web::Data::new(AppStateWithCounter {
-        counter: Mutex::new(0),
-    });
+    //let counter = web::Data::new(AppStateWithCounter {
+    //    counter: Mutex::new(0),
+    //});
+    let scope = web::scope("/users").service(show_users);
+    App::new().service(scope);
     HttpServer::new(move || {
         App::new()
             // .service(hello)
