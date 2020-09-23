@@ -50,23 +50,23 @@ fn scoped_config(cfg: &mut web::ServiceConfig) {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
-        App::new()
-            .service(
-                web::scope("/")
-                    .guard(guard::Header("Host", "www.rust-lang.org"))
-                    .route("", web::to(|| HttpResponse::Ok().body("www"))),
-            )
-            .service(
-                web::scope("/")
-                .guard(guard::Header("Host", "users.rust-lang.org"))
-                .route("", web::to(|| HttpResponse::Ok().body("user"))),
-            )
-            .route(r"/", web::to(|| HttpServer::Ok()))
-    })
-    .bind("127.0.0.1:8080")?
-    .run()
-    .await
+    // HttpServer::new(|| {
+    //     App::new()
+    //         .service(
+    //             web::scope("/")
+    //                 .guard(guard::Header("Host", "www.rust-lang.org"))
+    //                 .route("", web::to(|| HttpResponse::Ok().body("www"))),
+    //         )
+    //         .service(
+    //             web::scope("/")
+    //             .guard(guard::Header("Host", "users.rust-lang.org"))
+    //             .route("", web::to(|| HttpResponse::Ok().body("user"))),
+    //         )
+    //         .route(r"/", web::to(|| HttpServer::Ok()))
+    // })
+    // .bind("127.0.0.1:8080")?
+    // .run()
+    // .await
     //let counter = web::Data::new(AppStateWithCounter {
     //    counter: Mutex::new(0),
     //});
