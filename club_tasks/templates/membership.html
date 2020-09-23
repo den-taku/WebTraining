@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -9,18 +9,15 @@
 <body>
     <div>
         {% for entry in entries %}
-        <div>id: {{ entry.id }}, 
-             grade: {{ entry.grade }}, 
-             name: {{ entry.name }},
-             pre: {{ entry.pre }},
-             current: {{ entry.current }},
-             pro: {{ entry.pro }}
+        <div>
+            <div>grade: {{ entry.grade }}, name: {{ entry.name }}</div>
+            <form action="/pay" method="post">
+                <div>{{grade}}: {{name}} : {{state}}</div>
+                <button>pay</button>
+            </form>
         </div>
-        <form action="/pay" method="post">
-            <input type="hidden" name="id" value="{{ entry.id }}">
-            <button>{{ entry.pre }}</button>
-        </form>
+        {% endfor%}
     </div>
 </body>
 
-</html> -->
+</html>

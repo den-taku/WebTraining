@@ -10,6 +10,23 @@ struct IndexTemlate {
     entries: Vec<Null>,
 }
 
+// enum paymentstate {
+//     already,
+//     still,
+// }
+
+// struct MembershipEntry {
+    // grade: u8,
+    // name: String,
+    // // state: bool, // already payed -> true
+// }
+
+// #[derive(Template)]
+// #[template(path = "membership.html")]
+// struct MembershipTemplate {
+        // entries: Vec<MembershipEntry>,
+// }
+
 #[derive(Error, Debug)]
 enum MyError {
     #[error("Failed to render HTML")]
@@ -28,6 +45,21 @@ async fn index() -> Result<HttpResponse, MyError> {
         .content_type("text/html")
         .body(response_body))
 }
+
+// #[get("/membership.html")]
+// async fn membership() -> Result<HttpResponse, MyError> {
+    // let mut entries = Vec::new();
+    // entries.push(MembershipEntry{ 
+        // grade: 3,
+        // name: "DenTaku".to_string(),
+        // // state: true,
+    // });
+    // let html = MembershipTemplate { entries };
+    // let response_body = html.render()?;
+    // Ok(HttpResponse::Ok()
+        // .content_type("text/html")
+        // .body(response_body))
+// }
 
 #[actix_rt::main]
 async fn main() -> Result<(), actix_web::Error> {
