@@ -40,6 +40,14 @@ async fn index(data: web::Data<AppStateWithCounter>) -> String {
     format!("Request naumber: {}", counter)
 }
 
+fn scoped_config(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::resource("/test")
+            .route(web::get().to(|| HttpResponse::Ok().body("test")))
+            .route(web::head().to(|| HttpResponse::MethodNotAllowed()))
+    );
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
@@ -54,7 +62,7 @@ async fn main() -> std::io::Result<()> {
                 .guard(guard::Header("Host", "users.rust-lang.org"))
                 .route("", web::to(|| HttpResponse::Ok().body("user"))),
             )
-            .route("/", web::to(|| HttpServer::Ok()))
+            .route(r"/", web::to(|| HttpServer::Ok()))
     })
     .bind("127.0.0.1:8080")?
     .run()
